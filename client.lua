@@ -2,15 +2,15 @@ _menuPool = NativeUI.CreatePool()
 mainMenu = NativeUI.CreateMenu("Evidence Unit", "Police Evidence System")
 _menuPool:Add(mainMenu)
 
--- Example location of a police station
+-- location of a police station
 local policeStationCoords = {
     vector3(451.67, -980.11, 30.69),
     vector3(1846.79, 3692.92, 34.26),
     -- Add more vector3 entries for additional locations
 }
-local markerSize = 0.75 -- Half the size of the previous marker (adjust as needed)
+local markerSize = 0.75
 local maxDistance = 5.0 -- Maximum distance at which 3D text will be visible
-local isMenuOpen = false -- variable
+local isMenuOpen = false 
 local isInMarkerArea = false
 local evidenceSubMenu
 
@@ -134,7 +134,6 @@ function InitializePlayerWeapons()
     end
 end
 
--- Call the function once at the start of the script to populate the initial weapons
 InitializePlayerWeapons()
 
 function GetAvailableWeapons()
@@ -201,14 +200,11 @@ function EvidenceStorageMenu(submenu)
     UpdateEvidenceStorageMenu(submenu)
 end
 
--- Create the Evidence Storage submenu once outside the main loop
 local evidenceSubMenu = _menuPool:AddSubMenu(mainMenu, "Evidence Storage", "Select weapons to secure")
 EvidenceStorageMenu(evidenceSubMenu)
 
--- Variable to keep track of whether the menu is already open
 local isMenuOpen = false
 
--- Function to open the main menu
 function OpenMainMenu()
     mainMenu:Visible(true)
     _menuPool:RefreshIndex()
@@ -220,7 +216,6 @@ function CloseMainMenu()
     isMenuOpen = false -- Set isMenuOpen to false when closing the menu
 end
 
--- Function to open the Evidence Storage NativeUI menu
 function OpenEvidenceStorageMenu()
     if not isMenuOpen then
         _menuPool:CloseAllMenus()
@@ -236,14 +231,12 @@ end
 _menuPool:MouseControlsEnabled(false)
 _menuPool:ControlDisablingEnabled(false)
 
--- Function to display notifications on the screen
 function notify(text)
     SetNotificationTextEntry("STRING")
     AddTextComponentString(text)
     DrawNotification(false, false)
 end
 
--- Function to display 3D text on the screen
 function DrawText3D(coords, text)
     local onScreen, _x, _y = World3dToScreen2d(coords.x, coords.y, coords.z)
     local px, py, pz = table.unpack(GetGameplayCamCoord())
@@ -262,12 +255,10 @@ function DrawText3D(coords, text)
     end
 end
 
--- Function to check if the menu is open
 function IsMenuOpen()
     return mainMenu:Visible()
 end
 
--- Function to update the playerWeapons table every 1 second
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000) -- 1000 milliseconds = 1 second
